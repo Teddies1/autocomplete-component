@@ -11,8 +11,8 @@ const AutoComplete = ({ setResults }: any) => {
     const [options, setOptions] = useState<Array<Object>>([]);
     const [disabled, setDisabled] = useState(false);
     const loading = !disabled && options.length === 0;
-    const description = "test";
-    const label = "label";
+    const description = "With default display and search on focus";
+    const label = "Sync Search";
 
     function sleep(duration: number): Promise<void> {
       return new Promise<void>((resolve) => {
@@ -21,7 +21,7 @@ const AutoComplete = ({ setResults }: any) => {
         }, duration);
       });
     }
-    
+
     React.useEffect(() => {
       let active = true;
   
