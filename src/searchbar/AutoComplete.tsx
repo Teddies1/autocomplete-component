@@ -5,7 +5,7 @@ import { debounce } from '@mui/material/utils';
 
 const AutoComplete = ({ description, label, loading, multiple }: any) => {
     const [options, setOptions] = useState<Array<Object>>([]);
-    const [disabled, setDisabled] = useState(false);
+    const [disabled] = useState(false);
     
     const onInputChange = (value: string) => {
       fetch("https://api.first.org/data/v1/countries")
