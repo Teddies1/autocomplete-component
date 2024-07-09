@@ -1,22 +1,11 @@
 import { useState } from 'react';
-import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { debounce } from '@mui/material/utils';
-import CircularProgress from '@mui/material/CircularProgress';
 
-const AutoComplete = ({ description, label, loading }) => {
+const AutoComplete = ({ description, label, loading, multiple }: any) => {
     const [options, setOptions] = useState<Array<Object>>([]);
     const [disabled, setDisabled] = useState(false);
-    
-    
-    function sleep(duration: number = 0): Promise<void> {
-      return new Promise<void>((resolve) => {
-        setTimeout(() => {
-          resolve();
-        }, duration);
-      });
-    }
     
     const onInputChange = (value: string) => {
       fetch("https://api.first.org/data/v1/countries")
@@ -38,33 +27,35 @@ const AutoComplete = ({ description, label, loading }) => {
       <>
         <div className="">
           <div className="input-container bg-slate-300 pl-4 pr-6 py-2 shadow-lg flex flex-col justify-center items-center gap-5 rounded-md">  
-            <div>{label}</div>
+            <div className='text-blue-500'>{label}</div>
             <Autocomplete
-              multiple
+              freeSolo
+              noOptionsText={"No matches..."}
+              multiple={multiple}
               id="autocomplete-demo"
               options={options}
               disabled={disabled}
               loading = {loading}
               filterOptions={(options) => options}
-              getOptionLabel={(options) => `${options.country}, ${options.region}`}
-              isOptionEqualToValue={(option, value) => option.country === value.country}
+              getOptionLabel={(options) => (options as { country: string }).country + ", " + (options as { region: string }).region}
+              isOptionEqualToValue={(option, value) => (option as { country: string }).country === (value as {country: string}).country}
               sx={{ width: 300 }}
               renderInput={(params) => 
                 <TextField 
                   {...params} 
                   label="Type to begin searching"
                   onChange={(e) => {
-                    if (loading === true && (e.target.value !== "" || e.target.value !== null)) {
+                    if (loading === true) {
                       delayedCall(e.target.value);
                     }
-                    else if(loading === false && (e.target.value !== "" || e.target.value !== null)){
+                    else if(loading === false){
                       onInputChange(e.target.value);
                     }
                   }} 
                 />
               }
             />
-            <div>{description}</div>
+            <div className='text-blue-500'>{description}</div>
           </div>
         </div>
         
