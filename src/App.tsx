@@ -7,9 +7,8 @@ function App() {
   const [results, setResults] = useState([]);
   return (
     <>
-      <div className='w-full h-[100vh] search-container flex flex-col justify-center items-center'>
+      <div className='bg-white w-2/4 m-auto h-[100vh] search-container flex flex-col justify-center items-center'>
         <AutoComplete setResults={setResults} />
-        <SearchResults results={results} />
       </div>
     </>
   )

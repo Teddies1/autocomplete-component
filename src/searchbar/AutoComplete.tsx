@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
+import * as React from 'react';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
 
 type AutoCompleteProps = {
     // description: string,
@@ -30,20 +33,35 @@ const AutoComplete = ({ setResults }: any) => {
         setInput(value);
         fetchData(value);
     };
-
+    const options = ["jenny"]
     return (
       <>
         <div className="">
-          <div className="input-container bg-slate-300 pl-4 pr-6 py-2 shadow-lg flex justify-center items-center gap-5 rounded-md">  
-            <FaSearch/>    
+          <div className="input-container bg-slate-300 pl-4 pr-6 py-2 shadow-lg flex flex-col justify-center items-center gap-5 rounded-md">  
+            {/* <FaSearch/>    
             <input 
-                placeholder='Type to begin searching' className='pl-2 pr-6 py-2 w-full border border-slate-500 bg-transparent border-none focus:outline-none' 
+                placeholder='Type to begin searching' className='pl-2 pr-6 py-2 w-full h-full border border-slate-500 bg-transparent border-none focus:outline-none' 
                 value={input}
                 onChange={(e) => onInputChange(e.target.value)}
             >
-            </input>
+            </input> */}
+            <Autocomplete
+              disablePortal
+              id="combo-box-demo"
+              options={options}
+              sx={{ width: 300 }}
+              renderInput={(params) => <TextField {...params} label="Type to begin searching" />}
+            />
+            <Autocomplete
+              disablePortal
+              id="combo-box-demo"
+              options={options}
+              sx={{ width: 300 }}
+              renderInput={(params) => <TextField {...params} label="Type to begin searching" />}
+            />
           </div>
         </div>
+        
       </>
     )    
   }
