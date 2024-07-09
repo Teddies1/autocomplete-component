@@ -4,7 +4,7 @@ import AutoComplete from './searchbar/AutoComplete';
 function App() {
   return (
     <>
-      <AutoComplete/ >
+      <AutoComplete />
     </>
   )
 }
