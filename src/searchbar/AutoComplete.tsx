@@ -3,6 +3,7 @@ import { FaSearch } from 'react-icons/fa';
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import { debounce } from '@mui/material/utils';
 
 type AutoCompleteProps = {
     // description: string,
@@ -11,29 +12,40 @@ type AutoCompleteProps = {
 
 const AutoComplete = ({ setResults }: any) => {
     const [input, setInput] = useState("");
+    const [options, setOptions] = useState<Array<Object>>([]);
 
-    const fetchData = (value: string) => {
+    // const fetchData = (value: string) => {
+    //   fetch("https://api.first.org/data/v1/countries")
+    //       .then((response) => response.json())
+    //       .then((json) => {
+    //           const countrydata: Array<Object> = Object.values(json.data); 
+    //           const options = countrydata.filter((countries) => {
+    //               return (
+    //                   value && 
+    //                   countries && 
+    //                   (countries as any).country && 
+    //                   (countries as any).country.toLowerCase().includes(value)
+    //               );
+    //           });
+    //           console.log(options);
+    //       });
+    // };
+    React.useEffect(() => {
       fetch("https://api.first.org/data/v1/countries")
           .then((response) => response.json())
           .then((json) => {
-              const countrydata: Array<Object> = Object.values(json.data);
-              const options = countrydata.filter((countries) => {
-                  return (
-                      value && 
-                      countries && 
-                      (countries as any).country && 
-                      (countries as any).country.toLowerCase().includes(value)
-                  );
-              });
-              setResults(options);
+              const countrydata: Array<Object> = Object.values(json.data); 
+              console.log(countrydata);
+              setOptions(countrydata);
+              console.log(options);
           });
-    };
+    }, []);
 
     const onInputChange = (value: string) => {
         setInput(value);
         fetchData(value);
     };
-    const options = ["jenny"]
+    // const options = ["jenny"]
     return (
       <>
         <div className="">
@@ -46,18 +58,19 @@ const AutoComplete = ({ setResults }: any) => {
             >
             </input> */}
             <Autocomplete
+              multiple
               disablePortal
               id="combo-box-demo"
               options={options}
+              filterOptions={(x) => x}
               sx={{ width: 300 }}
-              renderInput={(params) => <TextField {...params} label="Type to begin searching" />}
-            />
-            <Autocomplete
-              disablePortal
-              id="combo-box-demo"
-              options={options}
-              sx={{ width: 300 }}
-              renderInput={(params) => <TextField {...params} label="Type to begin searching" />}
+              renderInput={(params) => 
+                <TextField 
+                  {...params} 
+                  label="Type to begin searching" 
+                  onChange={(e) => onInputChange(e.target.value)}
+                />
+              }
             />
           </div>
         </div>
