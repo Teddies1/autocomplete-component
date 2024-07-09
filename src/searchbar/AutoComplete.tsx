@@ -54,13 +54,10 @@ const AutoComplete = ({ description, label, loading }) => {
                   {...params} 
                   label="Type to begin searching"
                   onChange={(e) => {
-                    console.log(loading);
                     if (loading === true && (e.target.value !== "" || e.target.value !== null)) {
-                      console.log("async");
                       delayedCall(e.target.value);
                     }
                     else if(loading === false && (e.target.value !== "" || e.target.value !== null)){
-                      console.log("sync");
                       onInputChange(e.target.value);
                     }
                   }} 
